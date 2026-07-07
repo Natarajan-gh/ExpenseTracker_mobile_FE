@@ -7,8 +7,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { navigationType } from "../types/navigationType";
 
 
-const LoginScreen = () => {
-    const { login } = useAuth();
+const RegisterScreen = () => {
+    const { register } = useAuth();
+    const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [loading, setLoading] = useState(false);
@@ -18,10 +19,10 @@ const LoginScreen = () => {
 
     const handleLogin = async () => {
         setLoading(true);
-        if (email && password) {
-            const response = await login(email, password);
+        if (name && email && password) {
+            const response = await register(name, email, password);
             if (response.success) {
-                navigation.navigate('Home')
+                navigation.navigate('Login')
             } else {
                 setError(response?.message || 'Something went wrong!')
                 console.log(email, password, response)
@@ -33,10 +34,15 @@ const LoginScreen = () => {
         <KeyboardAvoidingView style={styles.mainContainer} behavior={Platform.OS === "ios" ? "padding" : undefined}>
             <StatusBar barStyle="dark-content" backgroundColor={COLORS.primaryLight} />
             <View style={styles.container}>
-                {/* <Image source={require('../assets/Wallet.png')} style={{ width: 200, height: 200 }} /> */}
                 <Image source={require('../assets/Logo.png')} style={{ width: 120, height: 120 }} />
                 <Text style={styles.heading}>Welcome Back</Text>
                 <Text style={styles.subHeading}>Login to continue tracking your income & expenses.</Text>
+                <TextInput
+                    placeholder="Name"
+                    placeholderTextColor={COLORS.inputPlaceholder}
+                    onChangeText={(text) => setName(text)}
+                    style={styles.input}
+                />
                 <TextInput
                     placeholder="Email"
                     placeholderTextColor={COLORS.inputPlaceholder}
@@ -57,7 +63,7 @@ const LoginScreen = () => {
                 >
                     {
                         !loading ? (
-                            <Text style={{ color: COLORS.textWhite }}>Login</Text>
+                            <Text style={{ color: COLORS.textWhite }}>Register</Text>
                         ) : (
                             <ActivityIndicator size="small" color={COLORS.textWhite} />
                         )
@@ -67,17 +73,14 @@ const LoginScreen = () => {
                     error ?
                         <Text style={styles?.errorStyle}>{error}</Text> : null
                 }
-                <TouchableOpacity style={{ padding: 5 }} onPress={() => navigation.navigate('Register')}>
-                    <Text style={styles.miscel}>Don't have account?</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{ padding: 5 }} onPress={() => { }}>
-                    <Text style={styles?.miscel}>Forgot password!</Text>
+                <TouchableOpacity style={{ padding: 5 }} onPress={() => navigation?.goBack()}>
+                    <Text style={styles.miscel}>Already have account?</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
     )
 }
-export default LoginScreen;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
     mainContainer: {

@@ -1,4 +1,4 @@
-export const API_URL = "https://expensetracker-x29q.onrender.com/api/"
+export const API_URL = "https://expensetracker-x29q.onrender.com/api"
 export const COLORS = {
   // Brand
   primary: "#6D4AFF",
@@ -59,9 +59,10 @@ export const COLORS = {
 };
 
 export const FONTS = {
-    regular: 14,
-    medium: 16,
-    large: 18,
-    xlarge: 24,
-    xxlarge: 32,
+  regular: 14,
+  medium: 16,
+  large: 18,
+  xlarge: 24,
+  xxlarge: 32,
+  small: 12
 };

@@ -7,6 +7,10 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { COLORS } from './constants';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './screens/HomeScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 
 const Stack = createNativeStackNavigator();
@@ -14,7 +18,7 @@ const Tab = createBottomTabNavigator();
 
 
 const RootNavigator = () => {
-  const { user, isLoading } = useAuth();
+  const { token, isLoading } = useAuth();
 
   if (isLoading) {
     return (
@@ -24,8 +28,9 @@ const RootNavigator = () => {
     )
   }
   return (
-    <Stack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName={token != null ? 'Home' : 'Login'} screenOptions={{ headerShown: false }}>
       <Stack.Screen name='Login' component={LoginScreen} />
+      <Stack.Screen name='Register' component={RegisterScreen} />
       <Stack.Screen name='Home' component={HomeScreen} />
     </Stack.Navigator>
   )

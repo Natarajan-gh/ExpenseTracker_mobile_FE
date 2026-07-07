@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }: any) => {
 
     const loadStoreAuth = async () => {
         try {
+            console.log(token, 'ssss')
             const storedToken = await AsyncStorage.getItem('token');
             const storedUser = await AsyncStorage.getItem('user');
             if (storedToken && storedUser) {
@@ -44,6 +45,7 @@ export const AuthProvider = ({ children }: any) => {
         }
     }
     const register = async (name: string, email: string, password: string) => {
+        console.log(name, email, password, 'pppppppppp')
         try {
             const response = await axios.post(`${API_URL}/auth/register`, { name, email, password });
             const { token, user } = response.data;
